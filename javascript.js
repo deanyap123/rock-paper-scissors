@@ -19,42 +19,41 @@
 function getComputerChoice() {
   const game = ["rock", "paper", "scissors"];
   const randomEvent = Math.random();
-  const choice = Math.floor(randomEvent * game.length);
-  return game[choice];
+  const randomIndex = Math.floor(randomEvent * game.length);
+  return game[randomIndex];
 }
 
-const com = getComputerChoice();
-
-// const playerSelection = prompt("rock, paper or scissors?", "");
+function capitalize(word) {
+  return `${word.charAt(0).toUpperCase()}${word.slice(1).toLowerCase()}`;
+}
 
 function singleRound(playerSelection, computerSelection) {
-  computerSelection = com;
-  playerSelection = `${playerSelection.charAt(0).toUpperCase()}${playerSelection
-    .slice(1)
-    .toLowerCase()}`;
+  computerSelection = capitalize(getComputerChoice());
+  playerSelection = capitalize(playerSelection);
 
-  if (playerSelection === "Rock" && computerSelection === "rock") {
-    return `Computer: ${computerSelection.toUpperCase()} It's a draw`;
-  } else if (playerSelection === "Rock" && computerSelection === "paper") {
-    return `Computer: ${computerSelection.toUpperCase()} you lose`;
-  } else if (playerSelection === "Rock" && computerSelection === "scissors") {
-    return `Computer: ${computerSelection.toUpperCase()} you win`;
-  } else if (playerSelection === "Paper" && computerSelection === "paper") {
-    return `Computer: ${computerSelection.toUpperCase()} It"s a draw`;
-  } else if (playerSelection === "Paper" && computerSelection === "rock") {
-    return `Computer: ${computerSelection.toUpperCase()} you win`;
-  } else if (playerSelection === "Paper" && computerSelection === "scissors") {
-    return `Computer: ${computerSelection.toUpperCase()} you lose`;
+  if (playerSelection === computerSelection) {
+    return `Computer: ${computerSelection} It's a draw`;
   } else if (
-    playerSelection === "Scissors" &&
-    computerSelection === "scissors"
+    (playerSelection === "Rock" && computerSelection === "Scissors") ||
+    (playerSelection === "Paper" && computerSelection === "Rock") ||
+    (playerSelection === "Scissors" && computerSelection === "Paper")
   ) {
-    return `Computer: ${computerSelection.toUpperCase()} It"s a draw`;
-  } else if (playerSelection === "Scissors" && computerSelection === "paper") {
-    return `Computer: ${computerSelection.toUpperCase()} you win`;
-  } else if (playerSelection === "Scissors" && computerSelection === "rock") {
-    return `Computer: ${computerSelection.toUpperCase()} you lose`;
+    return `Computer: ${computerSelection} you win`;
+  } else {
+    return `Computer: ${computerSelection}  you lose`;
   }
 }
 
-console.log(singleRound("scissors"));
+console.log(singleRound("Rock"));
+
+// rock paper lose
+// paper scissors lose
+// scissors rock lose
+
+// rock scissors win
+// paper rock win
+// scissors paper win
+
+// rock rock draw
+// paper paper draw
+// scissors scissors draw
