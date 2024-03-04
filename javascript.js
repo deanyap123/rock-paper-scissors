@@ -1,59 +1,52 @@
-// Users key, either rock paper or scissors
-// GUI for these options
-// Computer returns random outcome
-// Rock Rock, Draw
-// Rock Paper, Paper wins
-// Rock Scissors, Rock Wins
-// Paper, Paper, Draw
-// Paper, Scissors, Scissors Wins
-// Scissors, Scissors, Draw
-
-// if (
-//     computerSelection === "rock" ||
-//     computerSelection === "paper" ||
-//     computerSelection === "scissors"
-//   ) {
-//     alert("It's a drawlololol");
-//   }
-
 function getComputerChoice() {
-  const game = ["rock", "paper", "scissors"];
-  const randomEvent = Math.random();
-  const randomIndex = Math.floor(randomEvent * game.length);
-  return game[randomIndex];
+  const choices = ["rock", "paper", "scissors"];
+  const random = Math.floor(Math.random() * choices.length);
+  return choices[random];
 }
 
 function capitalize(word) {
   return `${word.charAt(0).toUpperCase()}${word.slice(1).toLowerCase()}`;
 }
 
-function singleRound(playerSelection, computerSelection) {
-  computerSelection = capitalize(getComputerChoice());
+function oneRound(playerSelection, computerSelection) {
   playerSelection = capitalize(playerSelection);
+  computerSelection = capitalize(getComputerChoice());
 
   if (playerSelection === computerSelection) {
-    return `Computer: ${computerSelection} It's a draw`;
+    return "Its a draw";
   } else if (
-    (playerSelection === "Rock" && computerSelection === "Scissors") ||
-    (playerSelection === "Paper" && computerSelection === "Rock") ||
-    (playerSelection === "Scissors" && computerSelection === "Paper")
+    (playerSelection === "Rock") & (computerSelection === "Paper") ||
+    (playerSelection === "Paper" && computerSelection === "Scissors") ||
+    (playerSelection === "Scissors" && computerSelection === "Rock")
   ) {
-    return `Computer: ${computerSelection} you win`;
+    return "You Win";
   } else {
-    return `Computer: ${computerSelection}  you lose`;
+    return "You lose";
   }
 }
 
-console.log(singleRound("Rock"));
+function playGame() {
+  let yourScore = 0;
+  let computerScore = 0;
+  for (i = 0; i < 5; i++) {
+    let answer = prompt("Rock, Paper, or Scissors? :)");
+    const result = oneRound(answer);
+    console.log(result);
 
-// rock paper lose
-// paper scissors lose
-// scissors rock lose
+    if (result === "You Win") {
+      yourScore++;
+    } else if (result === "You lose") {
+      computerScore++;
+    }
+  }
 
-// rock scissors win
-// paper rock win
-// scissors paper win
+  if (yourScore === computerScore) {
+    console.log("Tie, Rematch?", yourScore, computerScore);
+  } else if (yourScore > computerScore) {
+    console.log("Congrats, You Won", yourScore, computerScore);
+  } else if (yourScore < computerScore) {
+    console.log("Gameover, You Lost");
+  }
+}
 
-// rock rock draw
-// paper paper draw
-// scissors scissors draw
+playGame();
