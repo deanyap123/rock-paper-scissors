@@ -28,7 +28,7 @@ function oneRound(playerSelection, computerSelection) {
 function playGame() {
   let yourScore = 0;
   let computerScore = 0;
-  for (i = 0; i < 5; i++) {
+  for (let i = 0; i < 5; i++) {
     let answer = prompt("Rock, Paper, or Scissors? :)");
     const result = oneRound(answer);
     console.log(result);
