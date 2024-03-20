@@ -13,7 +13,7 @@ function oneRound(playerSelection, computerSelection) {
   computerSelection = capitalize(getComputerChoice());
 
   if (playerSelection === computerSelection) {
-    return "Its a draw";
+    return "Its a Draw";
   } else if (
     (playerSelection === "Rock") & (computerSelection === "Paper") ||
     (playerSelection === "Paper" && computerSelection === "Scissors") ||
@@ -21,32 +21,72 @@ function oneRound(playerSelection, computerSelection) {
   ) {
     return "You Win";
   } else {
-    return "You lose";
+    return "You Lose";
   }
 }
 
-function playGame() {
-  let yourScore = 0;
-  let computerScore = 0;
-  for (let i = 0; i < 5; i++) {
-    let answer = prompt("Rock, Paper, or Scissors? :)");
-    const result = oneRound(answer);
-    console.log(result);
+let playScore = 0;
+let compScore = 0;
+let currentRound = 0;
 
-    if (result === "You Win") {
-      yourScore++;
-    } else if (result === "You lose") {
-      computerScore++;
-    }
+const rock = document.querySelector(".rock");
+const paper = document.querySelector(".paper");
+const scissors = document.querySelector(".scissors");
+const message = document.querySelector(".message");
+const yourScore = document.querySelector(".your-score");
+const computerScore = document.querySelector(".computer-score");
+const round = document.querySelector(".round");
+
+rock.addEventListener("click", () => {
+  if (currentRound < 5) {
+    handlePlayerChoice("rock");
+    currentRound++;
+    round.textContent = `Round : ${currentRound}`;
+  }
+});
+
+paper.addEventListener("click", () => {
+  if (currentRound < 5) {
+    handlePlayerChoice("paper");
+    currentRound++;
+    round.textContent = `Round : ${currentRound}`;
+  }
+});
+
+scissors.addEventListener("click", () => {
+  if (currentRound < 5) {
+    handlePlayerChoice("scissors");
+    currentRound++;
+    round.textContent = `Round : ${currentRound}`;
+  }
+});
+function handlePlayerChoice(playerChoice) {
+  const result = oneRound(playerChoice);
+  if (result === "You Win") {
+    playScore++;
+    yourScore.textContent = `Your score : ${playScore}`;
+    message.textContent = result;
+  } else if (result === "You Lose") {
+    compScore++;
+    computerScore.textContent = `Computer score : ${compScore}`;
+    message.textContent = result;
+  } else {
+    message.textContent = "Draw";
   }
 
-  if (yourScore === computerScore) {
-    console.log("Tie, Rematch?", yourScore, computerScore);
-  } else if (yourScore > computerScore) {
-    console.log("Congrats, You Won", yourScore, computerScore);
-  } else if (yourScore < computerScore) {
-    console.log("Gameover, You Lost");
+  console.log("Current round:", currentRound);
+
+  if (currentRound === 4) {
+    finalScore();
   }
 }
 
-playGame();
+function finalScore() {
+  if (playScore === compScore) {
+    message.textContent = "Tie, Rematch?";
+  } else if (playScore > compScore) {
+    message.textContent = "Congrats, You Won";
+  } else if (playScore < compScore) {
+    message.textContent = "Gameover, You lost";
+  }
+}
